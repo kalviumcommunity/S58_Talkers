@@ -1,0 +1,11 @@
+{
+  "name": "s58_talkers",
+  "version": "1.0.0",
+  "description": "## Overview: Talkers is a fun api that identifies the class chatterbox—the one who talks the most on the phone during class, adding humor to the classroom.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
