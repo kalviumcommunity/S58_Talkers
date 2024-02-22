@@ -4,18 +4,9 @@ const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
+const connection = require('./config/db');
 
 app.use(express.json()); // Middleware para parsear los JSON que se envian por POST
-
-const mongoURI = 'mongodb+srv://abhishekchaudhari:ABHISHEK21@cluster0.gxqu2ty.mongodb.net/newDb?retryWrites=true&w=majority';
-
-let connection=mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-// app.get('/', (req, res) => {
-//   res.send(`Database Connection Status: ${db.readyState === 1 ? 'Connected' : 'Disconnected'}`);
-// });
 
 
 app.get('/ping', (req, res) => {
@@ -74,15 +65,17 @@ let id=req.params.id
 let result=await talkersModel.findByIdAndDelete(id)
 res.json({msg:"Deleted the document successfully"})
 })
+
+
+
 app.listen(port, async() => {
   try {
-    // console.log(connection)
-    await connection;
-    console.log("connected to DB")
+     await connection;
+     console.log("connected to DB")
   } catch (error) {
-    console.log(error)
+     console.log(error)
   }
-  console.log(`🚀 server running on PORT: ${port}`);
+   console.log(`🚀 server running on PORT: ${port}`);
 });
 
 module.exports = app;
