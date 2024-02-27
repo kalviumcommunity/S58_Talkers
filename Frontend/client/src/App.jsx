@@ -1,24 +1,33 @@
 import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
-import StudentProfile from './components/StudentProfile';
 
 function App() {
-
-  const randomData = {
-    "sr_no": 11,
-    "name": "Aarav Mehta",
-    "avg_call_time": 58,
-    "social_media_usage": 1.2,
-    "class_participation_percentage": 59,
-    "study_group_participation": false,
-    "reaction_to_feedback": "negative",
-    "img_link": "https://img.freepik.com/premium-photo/portrait-young-handsome-indian-teenage-boy-street_251136-73549.jpg"
-  };
+  const [count, setCount] = useState(0)
 
   return (
     <>
-    <h1>Student Profile</h1>
-      <StudentProfile data={randomData}></StudentProfile>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
   )
 }
