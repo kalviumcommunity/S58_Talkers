@@ -8,7 +8,7 @@ const connection = require('./config/db');
 const cors = require("cors");
 app.use(cors());
 
-app.use(express.json()); // Middleware para parsear los JSON que se envian por POST
+app.use(express.json()); 
 
 
 app.get('/ping', (req, res) => {
@@ -30,14 +30,18 @@ app.get("/postAllData", async (req, res) => {
 
 app.post("/POST",async (req,res)=>{
   let document=req.body;
-  let result=await talkersModel.create(document)
-  res.json({msg:"Posted the document successfully"})
+  try {
+    let result=await talkersModel.create(document)
+    res.json({msg:"Posted the document successfully"})
+  } catch (error) {
+    console.log(error)
+    res.json({msg:"Something went wrong",err:error})
+  }
 });
 
 app.put("/UPDATE/:id",async (req,res)=>{
 let document=req.body;
 let id=req.params.id
-// console.log(id)
 try {
   let result=await talkersModel.findByIdAndUpdate(id,document)
   res.json({msg:"Updated the document successfully"})
