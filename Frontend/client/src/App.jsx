@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { api_url } from './API/api';
+import Form from  "../Component/Form";
+import Home from '../Component/Home';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
 
   const [data, setData] = useState(0);
+  const [form,setForm]=useState(true)
+
 
   useEffect(()=>{
-     fetch('http://localhost:3000/GET')
+     fetch(`${api_url}/GET`)
      .then(res=> res.json())
      .then(res=>{
       console.log(res)
@@ -19,18 +23,30 @@ function App() {
      })
   },[])
 
-  return (
+  return(
     <>
-      <div>
-        {data && data.map((e)=>{
-          return (<div>
-            <h1>{e.name} - {e.age}</h1>
-            <img src={e.img_link} alt="person"/>
-          </div>)
-        })}
-      </div>
+      <Routes>
+        <Route path="/" element={<Home data={data}/>}></Route>
+        <Route path="/post_data" element={<Form/>}></Route>
+      </Routes>
     </>
   )
+
+  
+    // <>
+    // {
+    //   if(form){
+    //    return ( <Form form={form} setForm={setForm}/>)
+    //   }else{
+    //     return (
+    //       <Home data={data}/>
+    //   )
+    //   }
+    // }
+    
+      
+    {/* </> */}
+  // )
 }
 
 export default App
