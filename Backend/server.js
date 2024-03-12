@@ -66,10 +66,14 @@ app.patch("/UPDATE/:id",async (req,res)=>{
 
 
 app.delete("/DELETE/:id",async (req,res)=>{
-let document=req.body;
 let id=req.params.id
-let result=await talkersModel.findByIdAndDelete(id)
-res.json({msg:"Deleted the document successfully"})
+  try {
+    let result=await talkersModel.findByIdAndDelete(id)
+    res.json({msg:"Deleted the document successfully"})
+    
+  } catch (error) {
+    
+  }
 })
 
 
