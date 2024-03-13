@@ -6,15 +6,44 @@ const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
 const connection = require('./config/db');
 const cors = require("cors");
+const Joi =  require("joi");
+const userModel = require('./Model/User.model');
 app.use(cors());
 
 app.use(express.json()); 
+
+const userSchema = Joi.object({
+  name: Joi.string().required(),
+  username: Joi.string().required(),
+  email: Joi.string().email().required(),
+  mobile:Joi.number().required(),
+  password: Joi.string().min(8).regex(/^(?=.*[a-z])(?=.*[@])/).required(),
+});
 
 
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
 });
 
+app.post('/register',async(req,res)=>{
+  let payload=req.body
+  const { error, value } = userSchema.validate(payload);
+  console.log(error)
+  if (error) {
+      res.json({"msg":"Validation Failed"})
+  }else{
+
+    try {
+      let result=await userModel.create(payload)
+      res.json({msg:"Validated & SignUp successfully"})
+    } catch (error) {
+      console.log(error)
+      res.json({msg:"Something went wrong",err:error})
+    }
+    
+  }
+  
+})
 
 
 app.get("/GET",async (req,res)=>{
@@ -28,22 +57,38 @@ app.get("/postAllData", async (req, res) => {
     res.send(result)
 });
 
+const postSchema = Joi.object({
+  sr_no: Joi.number().required(),
+  name: Joi.string().required(),
+  avg_call_time: Joi.number().optional(),
+  social_media_usage:Joi.number().optional(),
+  class_participation_percentage: Joi.number().optional(),
+  study_group_participation: Joi.boolean().optional(),
+  reaction_to_feedback: Joi.string().optional(),
+  img_link: Joi.string().required(),
+});
+
 app.post("/POST",async (req,res)=>{
-  let document=req.body;
+  let payload=req.body;
+  const { error, value } = postSchema.validate(payload);
+  if (error){
+    res.json({"msg":"Validation Failed"})
+  }else{
   try {
-    let result=await talkersModel.create(document)
-    res.json({msg:"Posted the document successfully"})
+    let result=await talkersModel.create(payload)
+    res.json({msg:"Posted the document and signup successfully"})
   } catch (error) {
     console.log(error)
     res.json({msg:"Something went wrong",err:error})
   }
+}
 });
 
 app.put("/UPDATE/:id",async (req,res)=>{
-let document=req.body;
+let payload=req.body;
 let id=req.params.id
 try {
-  let result=await talkersModel.findByIdAndUpdate(id,document)
+  let result=await talkersModel.findByIdAndUpdate(id,payload)
   res.json({msg:"Updated the document successfully"})
 } catch (error) {
   console.log(error)
@@ -52,11 +97,11 @@ try {
 });
 
 app.patch("/UPDATE/:id",async (req,res)=>{
-  let document=req.body;
+  let payload=req.body;
   let id=req.params.id
   console.log(id)
   try {
-    let result=await talkersModel.findByIdAndUpdate(id,document)
+    let result=await talkersModel.findByIdAndUpdate(id,payload)
     res.json({msg:"Updated the document successfully"})
   } catch (error) {
     console.log(error)
