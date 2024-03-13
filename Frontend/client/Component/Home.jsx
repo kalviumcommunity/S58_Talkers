@@ -1,9 +1,12 @@
 // HOME.JSX
-import React from 'react';
+import React, { useState } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
-function Home({ data, fetchData,setFlag,flag }) {
+function Home({ data, fetchData,setFlag,flag,login,setLogin }) {
+
+  
+
   const navigate = useNavigate();
 
   const goToFormRoute = () => {
@@ -30,11 +33,22 @@ function Home({ data, fetchData,setFlag,flag }) {
     navigate(`/update_data/${id}`);
   };
 
+  const handleLogout=()=>{
+    document.cookie = "username=; expires=Thu, 01 Jan 2020 00:00:00 UTC; path=/;";
+    setLogin(!login)
+  }
+
+  const goToLoginRoute=()=>{
+    navigate("/login")
+  }
+
   return (
     <div className="container">
       <h1>Talkers App</h1>
       <button className='add-button' onClick={goToFormRoute}>Add New Entity</button>
       <button className='reg-button' onClick={goToRegisterRoute}>SignUp</button>
+      {login==false?<button className='logout-button' onClick={handleLogout}>Logout</button>:
+      <button className='login-button' onClick={goToLoginRoute}>LogIn</button>}
       <div className="entity-container">
         {data &&
           data.map((e, index) => (
@@ -44,7 +58,7 @@ function Home({ data, fetchData,setFlag,flag }) {
               <button className='edit' onClick={() => handleUpdate(e)}>Update</button>
               <button className='dlt' onClick={() => handleDelete(e._id)}>Delete</button>
               
-              <h3>Average call {e.avg_call_time}Hrs</h3>
+              <h3>Average call:{e.avg_call_time}Hrs</h3>
               <h3>Reaction:{e.reaction_to_feedback}</h3>
               
             </div>
