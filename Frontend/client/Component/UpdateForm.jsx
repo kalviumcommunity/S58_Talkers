@@ -9,10 +9,7 @@ const UpdateForm = () => {
 
     const params=useParams();
     let id=params.id;
-    // console.log(id)
-
-
- 
+    
     function handleName(e){
      setName(e.target.value)
     }

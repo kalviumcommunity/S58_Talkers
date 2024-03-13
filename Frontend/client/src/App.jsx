@@ -5,6 +5,7 @@ import Form from  "../Component/Form";
 import Home from '../Component/Home';
 import { Route, Routes } from 'react-router-dom';
 import UpdateForm from '../Component/UpdateForm';
+import RegisterForm from '../Component/Register';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="/" element={<Home data={data} setFlag={setFlag} flag={flag} />}></Route>
         <Route path="/post_data" element={<Form/>}></Route>
         <Route path="/update_data/:id" element={<UpdateForm />}></Route>
+        <Route path="/register" element={<RegisterForm />}></Route>
       </Routes>
     </>
   )
