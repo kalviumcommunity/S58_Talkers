@@ -7,6 +7,7 @@ const { talkersData } = require('./config/data');
 const connection = require('./config/db');
 const cors = require("cors");
 const Joi =  require("joi");
+const brcypt=require("bcrypt");
 const userModel = require('./Model/User.model');
 app.use(cors());
 
@@ -27,15 +28,19 @@ app.get('/ping', (req, res) => {
 
 app.post('/register',async(req,res)=>{
   let payload=req.body
+  let {password}=req.body;
   const { error, value } = userSchema.validate(payload);
   console.log(error)
   if (error) {
-      res.json({"msg":"Validated & SignUp successfully"})
+      res.json({"msg":"Validation unsuccessfully"})
   }else{
 
     try {
-      let result=await userModel.create(payload)
-      res.json({msg:"Validated & SignUp successfully"})
+      brcypt.hash(password,2,async function(err,hash){
+        let result=await userModel.create({...payload,password:hash})
+        res.json({msg:"Validated & SignUp successfully",result})
+      })
+      
     } catch (error) {
       console.log(error)
       res.json({msg:"Something went wrong",err:error})
