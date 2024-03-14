@@ -30,7 +30,7 @@ app.post('/register',async(req,res)=>{
   const { error, value } = userSchema.validate(payload);
   console.log(error)
   if (error) {
-      res.json({"msg":"Validation Failed"})
+      res.json({"msg":"Validated & SignUp successfully"})
   }else{
 
     try {
