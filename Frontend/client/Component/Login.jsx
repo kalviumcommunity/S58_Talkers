@@ -18,8 +18,21 @@ function LoginForm({ login, setLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    document.cookie = `username=${username};`;
+    // document.cookie = `username=${username};`;
 
+    fetch('http://localhost:7777/login',{
+      method:'POST',
+      body: JSON.stringify({ username, password }),
+      headers:{"Content-Type":"application/json"}
+    }).then((res)=>{
+      return res.json()
+    }).then((res)=>{
+      console.log(res)
+      let token=res.Token;
+       document.cookie = `Token=${token};`;
+    }).catch((err)=>{
+      console.log(err);
+    })
 
     setLogin(!login);
     navigate('/');

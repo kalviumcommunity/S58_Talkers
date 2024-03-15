@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const jwt=require('jsonwebtoken')
 const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
 const connection = require('./config/db');
@@ -48,6 +50,22 @@ app.post('/register',async(req,res)=>{
     
   }
   
+})
+
+app.post('/login',async (req,res)=>{
+  let payload=req.body;
+  const {username,password}=payload;
+  try {
+    let result=await userModel.findOne({username});
+    if (result){
+      const token = jwt.sign(payload, process.env.secretKey);
+      res.json({Token:token,msg:"Hurray! Login Successfull"});
+    }else{
+      res.json({msg:"User not found, Please Register/SignUp"})
+    }
+  } catch (error) {
+    res.json({msg:"Something went wrong",Error:error})
+  }
 })
 
 
