@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
+const jwt=require('jsonwebtoken')
 const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
 const connection = require('./config/db');
 const cors = require("cors");
 const Joi =  require("joi");
+const brcypt=require("bcrypt");
 const userModel = require('./Model/User.model');
 app.use(cors());
 
@@ -27,15 +30,19 @@ app.get('/ping', (req, res) => {
 
 app.post('/register',async(req,res)=>{
   let payload=req.body
+  let {password}=req.body;
   const { error, value } = userSchema.validate(payload);
   console.log(error)
   if (error) {
-      res.json({"msg":"Validated & SignUp successfully"})
+      res.json({"msg":"Validation unsuccessfully"})
   }else{
 
     try {
-      let result=await userModel.create(payload)
-      res.json({msg:"Validated & SignUp successfully"})
+      brcypt.hash(password,2,async function(err,hash){
+        let result=await userModel.create({...payload,password:hash})
+        res.json({msg:"Validated & SignUp successfully",result})
+      })
+      
     } catch (error) {
       console.log(error)
       res.json({msg:"Something went wrong",err:error})
@@ -43,6 +50,22 @@ app.post('/register',async(req,res)=>{
     
   }
   
+})
+
+app.post('/login',async (req,res)=>{
+  let payload=req.body;
+  const {username,password}=payload;
+  try {
+    let result=await userModel.findOne({username});
+    if (result){
+      const token = jwt.sign(payload, process.env.secretKey);
+      res.json({Token:token,msg:"Hurray! Login Successfull"});
+    }else{
+      res.json({msg:"User not found, Please Register/SignUp"})
+    }
+  } catch (error) {
+    res.json({msg:"Something went wrong",Error:error})
+  }
 })
 
 

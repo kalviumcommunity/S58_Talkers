@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm({ login, setLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -18,8 +18,21 @@ function LoginForm({ login, setLogin }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    document.cookie = `username=${username};`;
+    // document.cookie = `username=${username};`;
 
+    fetch('http://localhost:7777/login',{
+      method:'POST',
+      body: JSON.stringify({ username, password }),
+      headers:{"Content-Type":"application/json"}
+    }).then((res)=>{
+      return res.json()
+    }).then((res)=>{
+      console.log(res)
+      let token=res.Token;
+       document.cookie = `Token=${token};`;
+    }).catch((err)=>{
+      console.log(err);
+    })
 
     setLogin(!login);
     navigate('/');
