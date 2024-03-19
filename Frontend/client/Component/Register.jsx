@@ -1,12 +1,5 @@
-// USER SCHEMA
-// name: String,
-// username: String,
-// email: String,
-// mobile: Number,
-// password: String
-
 import React, { useState } from 'react';
-import './Form.css';
+import './Register.css'
 
 function RegisterForm() {
   const [name, setName] = useState('');
@@ -66,7 +59,8 @@ function RegisterForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <button onClick={() => window.history.back()} className="back-button">Back</button>
+      <form onSubmit={handleSubmit} className="register-form">
         <input onChange={handleName} type="text" placeholder="Name" />
         <input onChange={handleUsername} type="text" placeholder="Username" />
         <input onChange={handleEmail} type="email" placeholder="Email" />
