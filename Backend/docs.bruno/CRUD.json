@@ -1,0 +1,99 @@
+{
+  "name": "CRUD",
+  "version": "1",
+  "items": [
+    {
+      "type": "http",
+      "name": "GET REQUEST",
+      "seq": 1,
+      "request": {
+        "url": "",
+        "method": "GET",
+        "headers": [],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "none",
+          "basic": {
+            "username": "",
+            "password": ""
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "POST REQ",
+      "seq": 2,
+      "request": {
+        "url": "http://localhost:3000/UPDATE",
+        "method": "POST",
+        "headers": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n\"sr_no\": 11,\n\"name\": \"Aarav Sharma\",\n\"avg_call_time\": 78,\n\"social_media_usage\": 3.2,\n\"class_participation_percentage\": 87,\n\"study_group_participation\": true,\n\"reaction_to_feedback\": \"positive\",\n\"img_link\": \"https://img.freepik.com/premium-photo/portrait-young-handsome-indian-teenage-boy-street_251136-73549.jpg\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "none",
+          "basic": {
+            "username": "",
+            "password": ""
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    },
+    {
+      "type": "http",
+      "name": "UPDATE",
+      "seq": 3,
+      "request": {
+        "url": "http://localhost:3000/DELETE/65d582be80f7bfa31f6a685a",
+        "method": "DELETE",
+        "headers": [],
+        "body": {
+          "mode": "json",
+          "json": "{\n\"sr_no\": 16,\n\"name\": \"Abhishek Chaudhary\"\n}",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "none",
+          "basic": {
+            "username": "",
+            "password": ""
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "query": []
+      }
+    }
+  ],
+  "environments": []
+}
