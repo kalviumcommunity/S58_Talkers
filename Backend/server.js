@@ -12,7 +12,6 @@ const Joi =  require("joi");
 const brcypt=require("bcrypt");
 const userModel = require('./Model/User.model');
 app.use(cors());
-
 app.use(express.json()); 
 
 const userSchema = Joi.object({
@@ -47,9 +46,7 @@ app.post('/register',async(req,res)=>{
       console.log(error)
       res.json({msg:"Something went wrong",err:error})
     }
-    
   }
-  
 })
 
 app.post('/login',async (req,res)=>{
@@ -143,8 +140,6 @@ let id=req.params.id
     
   }
 })
-
-
 
 app.listen(port, async() => {
   try {
