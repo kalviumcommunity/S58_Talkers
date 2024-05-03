@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import { api_url } from './API/api';
 import Form from  "../Component/Form";
@@ -9,86 +9,41 @@ import RegisterForm from '../Component/Register';
 import LoginForm from '../Component/Login';
 
 function App() {
-  const [mainData, setMainData] = useState(0);
-  const [data, setData] = useState(0);
-  const [form,setForm]=useState(true);
-  const [flag,setFlag]=useState(true);
-  const [login,setLogin]=useState(false);
-  let createdBy=[];
+  const [studentData, setStudentData] = useState({
+    sr_no: 1,
+    name: "Aarav Sharma",
+    avg_call_time: 78,
+    social_media_usage: 3.2,
+    class_participation_percentage: 87,
+    study_group_participation: true,
+    reaction_to_feedback: "positive",
+    img_link: "https://img.freepik.com/premium-photo/portrait-young-handsome-indian-teenage-boy-street_251136-73549.jpg"
+  });
 
-  useEffect(()=>{
-    fetch(`${api_url}/GET`)
-     .then(res=> res.json())
-     .then(res=>{
-      setData(res);
-      setMainData(res);
-      
-      res.map((ele)=>{
-        let flag=true;
-        if(createdBy.length==0){
-          createdBy.push(ele.created_by)
-        }
-        else{
-          for(let i=0;i<createdBy.length;i++){
-            // console.log(ele.created_by==createdBy[i],createdBy)
-            if(ele.created_by==createdBy[i]){
-              flag=false;
-              break;
-            }
-          }
-          if(flag){
-            createdBy.push(ele.created_by)
-          }
-        }
-      });
-      console.log(createdBy)
-     })
-     .catch(err=>{
-      console.log(err);
-     })
-  },[]);
+  const handleNameChange = () => {
+    setStudentData({
+      ...studentData,
+      name: "Updated Name"
+    });
+  }
 
-  useEffect(()=>{
-     fetch(`${api_url}/GET`)
-     .then(res=> res.json())
-     .then(res=>{
-      setData(res);
-      setMainData(res)
-     })
-     .catch(err=>{
-      console.log(err);
-     })
-  },[flag]);
 
-  
-
-  return(
+  return (
     <>
-      <Routes>  
-        <Route path="/" element={<Home data={data} setData={setData} mainData={mainData} createdBy={createdBy} setFlag={setFlag} flag={flag} login={login} setLogin={setLogin}/>}></Route>
-        <Route path="/post_data" element={<Form/>}></Route>
-        <Route path="/update_data/:id" element={<UpdateForm />}></Route>
-        <Route path="/register" element={<RegisterForm />}></Route>
-        <Route path="/Login" element={<LoginForm login={login} setLogin={setLogin}/>}></Route>
-      </Routes>
+      <div>
+        <img src={studentData.img_link} className="profile-image" alt="Student Profile" />
+      </div>
+      <h1>{studentData.name}'s Dashboard</h1>
+      <div className="card">
+        <p>Average Call Time: {studentData.avg_call_time}</p>
+        <p>Social Media Usage: {studentData.social_media_usage}</p>
+        <p>Class Participation Percentage: {studentData.class_participation_percentage}</p>
+        <p>Study Group Participation: {studentData.study_group_participation ? 'Yes' : 'No'}</p>
+        <p>Reaction to Feedback: {studentData.reaction_to_feedback}</p>
+        <button onClick={handleNameChange}>Change Name</button>
+      </div>
     </>
   )
-
-  
-    // <>
-    // {
-    //   if(form){
-    //    return ( <Form form={form} setForm={setForm}/>)
-    //   }else{
-    //     return (
-    //       <Home data={data}/>
-    //   )
-    //   }
-    // }
-    
-      
-    {/* </> */}
-  // )
 }
 
 export default App
