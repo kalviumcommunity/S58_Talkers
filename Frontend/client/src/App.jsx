@@ -1,5 +1,12 @@
 import { useState } from 'react'
 import './App.css'
+import { api_url } from './API/api';
+import Form from  "../Component/Form";
+import Home from '../Component/Home';
+import { Route, Routes } from 'react-router-dom';
+import UpdateForm from '../Component/UpdateForm';
+import RegisterForm from '../Component/Register';
+import LoginForm from '../Component/Login';
 
 function App() {
   const [studentData, setStudentData] = useState({
