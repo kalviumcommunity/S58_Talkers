@@ -58,11 +58,15 @@ function Home({ data,setData,mainData,createdBy,setFlag,flag,login,setLogin }) {
     <div className="container">
     <img id="logo1" src="./Component/talkersapp.png" alt="" />
 
+      
+      
+      
       <select name="" id="dropdown" onChange={handleChange}>
         <option value="Anika Patel">Anika Patel</option>
         <option value="Rohan Singh">Rohan Singh</option>
         <option value="Neha Patel">Neha Patel</option>
       </select>
+      
       <button className='add-button' onClick={goToFormRoute}>Add New Entity</button>
       <button className='reg-button' onClick={goToRegisterRoute}>SignUp</button>
       {login==false?<button className='logout-button' onClick={handleLogout}>Logout</button>:
