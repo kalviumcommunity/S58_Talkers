@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
 const connection = require('./config/db');
+
 const cors = require("cors");
+
 app.use(cors());
 
 app.use(express.json()); // Middleware para parsear los JSON que se envian por POST
