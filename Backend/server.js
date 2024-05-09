@@ -11,7 +11,9 @@ const jwt=require('jsonwebtoken')
 const talkersModel = require('./Model/talkers.model');
 const { talkersData } = require('./config/data');
 const connection = require('./config/db');
+
 const cors = require("cors");
+app.use(cors());
 const Joi =  require("joi");
 
 

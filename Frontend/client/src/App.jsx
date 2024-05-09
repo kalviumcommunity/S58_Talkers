@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import { useState } from 'react'
 import './App.css'
 import { api_url } from './API/api';
@@ -20,6 +23,27 @@ function App() {
     img_link: "https://img.freepik.com/premium-photo/portrait-young-handsome-indian-teenage-boy-street_251136-73549.jpg"
   });
 
+
+  
+  const [data, setData] = useState(0);
+
+  
+  useEffect(()=>{
+   
+    fetch('http://localhost:3000/GET')
+   
+    .then(res=> res.json())
+   
+    .then(res=>{
+      console.log(res)
+      setData(res)
+     })
+ 
+     .catch(err=>{
+      console.log(err);
+     })
+  
+    },[])
   const handleNameChange = () => {
     setStudentData({
       ...studentData,
@@ -28,9 +52,23 @@ function App() {
   }
 
 
+
   return (
     <>
       <div>
+
+        
+        {data && data.map((e)=>{
+        
+        return (<div>
+        
+            <h1>{e.name} - {e.age}</h1>
+        
+            <img src={e.img_link} alt="person"/>
+        
+          </div>)
+        
+        })}
         <img src={studentData.img_link} className="profile-image" alt="Student Profile" />
       </div>
       <h1>{studentData.name}'s Dashboard</h1>
